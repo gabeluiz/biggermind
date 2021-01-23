@@ -8,13 +8,13 @@ const Home: NextPage = () => {
         <div>
             {!session && (
             <div className="text-3xl">
-                Not signed inn <br/>
+                Not signed in <br/>
                 <button onClick={():Promise<void> => signIn('auth0')}>Sign in</button>
             </div>
             )}
             {session && (
             <div className="text-3xl">
-                Signed in as {session.user.email} <br/>
+                Signed in ass {session.user.email} <br/>
                 <button onClick={():Promise<void> =>  signOut()}>Sign out</button>
             </div>
             )}
