@@ -8,7 +8,7 @@ const Home: NextPage = () => {
         <div>
             {!session && (
             <div className="text-3xl">
-                Not signed in <br/>
+                Not signed inn <br/>
                 <button onClick={():Promise<void> => signIn('auth0')}>Sign in</button>
             </div>
             )}
