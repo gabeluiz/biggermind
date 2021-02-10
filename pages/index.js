@@ -1,14 +1,45 @@
-import React from "react";
 import Link from "next/link";
+import React, { useState, useEffect } from 'react'
+import { useForm } from "react-hook-form";
+import toast from 'react-hot-toast';
 
 // components
-
 import Navbar from "components/Navbars/IndexNavbar.js";
 import Footer from "components/Footers/Footer.js";
+import Formcontact from "components/Forms/contactForm.js";
 
-export default function Landing() {
+export const maskTelefone = (telefone) => {
+  return telefone
+    .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada
+    .replace(/(\d{2})/, '($1)') 
+    .replace(/(\d{5})(\d{1,2})/, '$1-$2')
+    .replace(/(-\d{4})\d+?$/, '$1') 
+};
+
+const Home = () => {
+
+  const { register, handleSubmit, reset, errors, setValue } = useForm({
+    mode: "onChange"
+  });
+
+  const onSubmit = async (data, e) => {
+    const res = await fetch('http://localhost:3000/api/cliente', {
+      method: 'post',
+      body: JSON.stringify(data)
+    })
+
+    if(res.ok){
+      toast.success(`Obrigado ${data.name}, logo entraremos em contato.`);
+    }else{
+      toast.error('Algo deu errado. Por favor tente novamente mais tarde.');
+    }
+    e.target.reset(); // reset after form submit
+  }
+
+
   return (
     <>
+      
       <Navbar transparent />
       <main>
         <div className="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
@@ -84,7 +115,7 @@ export default function Landing() {
                     </div>
                     <h6 className="text-xl font-semibold">Um card qualquer 2</h6>
                     <p className="mt-2 mb-4 text-gray-600">
-                    Texto de detalhes 2
+                      Texto de detalhes 2
                     </p>
                   </div>
                 </div>
@@ -98,7 +129,7 @@ export default function Landing() {
                     </div>
                     <h6 className="text-xl font-semibold">Um card qualquer 3</h6>
                     <p className="mt-2 mb-4 text-gray-600">
-                    Texto de detalhes 3
+                      Texto de detalhes 3
                     </p>
                   </div>
                 </div>
@@ -221,7 +252,7 @@ export default function Landing() {
                         </div>
                         <div>
                           <h4 className="text-gray-600">
-                          Sub-ti
+                            Sub-ti
                           </h4>
                         </div>
                       </div>
@@ -319,62 +350,16 @@ export default function Landing() {
               <div className="w-full lg:w-6/12 px-4">
                 <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-gray-300">
                   <div className="flex-auto p-5 lg:p-10">
-                    <h4 className="text-2xl font-semibold">
-                      Deseja o nosso serviço?
-                    </h4>
-                    <p className="leading-relaxed mt-1 mb-4 text-gray-600">
-                      Complete esse formulário que responderemos você rapidamente.
-                    </p>
-                    <div className="relative w-full mb-3 mt-8">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="full-name"
-                      >
-                        Nome completo
-                      </label>
-                      <input
-                        type="text"
-                        className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                        placeholder="Nome completo"
-                      />
-                    </div>
-
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="email"
-                      >
-                        E-mail
-                      </label>
-                      <input
-                        type="email"
-                        className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full ease-linear transition-all duration-150"
-                        placeholder="E-mail"
-                      />
-                    </div>
-
-                    <div className="relative w-full mb-3">
-                      <label
-                        className="block uppercase text-gray-700 text-xs font-bold mb-2"
-                        htmlFor="message"
-                      >
-                        Mensagem
-                      </label>
-                      <textarea
-                        rows="4"
-                        cols="80"
-                        className="px-3 py-3 placeholder-gray-400 text-gray-700 bg-white rounded text-sm shadow focus:outline-none focus:shadow-outline w-full"
-                        placeholder="Mensagem..."
-                      />
-                    </div>
-                    <div className="text-center mt-6">
-                      <button
-                        className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                      >
-                        Enviar Mensagem
+                    <form autocomplete="off" onSubmit={handleSubmit(onSubmit)}>
+                      <Formcontact register={register} errors={errors} setValue={setValue} maskTelefone={maskTelefone} />
+                      <div className="text-center mt-6">
+                        <button
+                          type="submit"
+                          className="bg-gray-900 text-white active:bg-gray-700 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150">
+                          Enviar Mensagem
                       </button>
-                    </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -386,3 +371,5 @@ export default function Landing() {
     </>
   );
 }
+
+export default Home

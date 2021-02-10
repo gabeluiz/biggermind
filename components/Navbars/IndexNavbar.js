@@ -2,10 +2,14 @@ import React from "react";
 import Link from "next/link";
 // components
 
-import PagesDropdown from "components/Dropdowns/PagesDropdown.js";
+import { signIn, signOut, useSession } from 'next-auth/client';
 
 export default function Navbar(props) {
+
+  const [session, loading] = useSession();
+
   const [navbarOpen, setNavbarOpen] = React.useState(false);
+  
   return (
     <>
       <nav className="top-0 absolute z-50 w-full flex flex-wrap items-center justify-between px-2 py-3 navbar-expand-lg">
@@ -35,9 +39,6 @@ export default function Navbar(props) {
             id="example-navbar-warning"
           >
             <ul className="flex flex-col lg:flex-row list-none lg:ml-auto">
-              <li className="flex items-center">
-                <PagesDropdown />
-              </li>
               <li className="flex items-center">
                 <a
                   className="lg:text-white lg:hover:text-gray-300 text-gray-800 px-3 py-4 lg:py-2 flex items-center text-xs uppercase font-bold"
@@ -71,6 +72,18 @@ export default function Navbar(props) {
                   </button>
                 </a>
               </li>
+              {/* <li>
+                <>
+                {!session && <>
+                  Not signed in <br/>
+                  <button onClick={signIn('auth0',{ callbackUrl: 'http://localhost:3000/admin/dashboard' })}>Sign in</button>
+                </>}
+                {session && <>
+                  Signed in as {session.user.email} <br/>
+                  <button onClick={signOut({ callbackUrl: 'http://localhost:3000' })}>Sign out</button>
+                </>}
+                </>
+              </li> */}
             </ul>
           </div>
         </div>

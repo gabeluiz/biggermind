@@ -3,6 +3,8 @@ import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
+import { Provider } from 'next-auth/client';
+import { Toaster } from 'react-hot-toast';
 
 import PageChange from "components/PageChange/PageChange.js";
 
@@ -51,9 +53,12 @@ export default class MyApp extends App {
           />
           <title>BiggerMind</title>
         </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+          <Layout>
+            <Provider session={pageProps.session}>
+              <Component {...pageProps} />
+            </Provider>
+          </Layout>
+        <Toaster />
       </React.Fragment>
     );
   }

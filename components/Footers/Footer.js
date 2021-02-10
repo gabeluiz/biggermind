@@ -151,6 +151,7 @@ export default function Footer() {
                 <a
                   href="https://www.linkedin.com/in/gabeluiz/"
                   className="text-gray-600 hover:text-gray-900"
+                  target="_blank"
                 >
                   Gabriel Luiz
                 </a>

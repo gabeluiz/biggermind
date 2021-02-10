@@ -1,5 +1,6 @@
 import React from "react";
 import { createPopper } from "@popperjs/core";
+import { signIn, signOut, useSession } from 'next-auth/client';
 
 const UserDropdown = () => {
   // dropdown props
@@ -15,6 +16,8 @@ const UserDropdown = () => {
   const closeDropdownPopover = () => {
     setDropdownPopoverShow(false);
   };
+
+  const [session, loading] = useSession();
   return (
     <>
       <a
@@ -78,7 +81,10 @@ const UserDropdown = () => {
           }
           onClick={(e) => e.preventDefault()}
         >
-          Seprated link
+          {session && <>
+            Signed in as {session.user.email} <br/>
+            <button onClick={signOut}>Sign out</button>
+          </>}
         </a>
       </div>
     </>

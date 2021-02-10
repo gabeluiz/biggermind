@@ -1,5 +1,8 @@
 import React from "react";
 
+// Auth session
+import { signIn, signOut, useSession, getSession } from 'next-auth/client'
+
 // components
 
 import AdminNavbar from "components/Navbars/AdminNavbar.js";
@@ -8,6 +11,20 @@ import HeaderStats from "components/Headers/HeaderStats.js";
 import FooterAdmin from "components/Footers/FooterAdmin.js";
 
 export default function Admin({ children }) {
+
+  const [ session, loading ] = useSession()
+
+  if (typeof window !== 'undefined' && loading) return null
+
+  if (!session) return (
+    <>
+      {!session && <>
+        Not signed in <br/>
+        <button onClick={signIn('auth0')}>Sign in</button>
+      </>}
+    </>
+  )
+
   return (
     <>
       <Sidebar />
@@ -22,4 +39,11 @@ export default function Admin({ children }) {
       </div>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
+  return {
+    props: { session }
+  }
 }

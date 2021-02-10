@@ -12,6 +12,7 @@ import CardSocialTraffic from "components/Cards/CardSocialTraffic.js";
 import Admin from "layouts/Admin.js";
 
 export default function Dashboard() {
+
   return (
     <>
       <div className="flex flex-wrap">
@@ -35,3 +36,7 @@ export default function Dashboard() {
 }
 
 Dashboard.layout = Admin;
+
+
+
+
