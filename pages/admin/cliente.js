@@ -23,7 +23,7 @@ export default function Customers(props) {
 Customers.layout = Admin;
 
 export async function getStaticProps() {
-  const customersResponse = await fetch('http://localhost:3000/api/cliente')
+  const customersResponse = await fetch('http://127.0.0.1:3000/api/cliente')
     .then(res => res.json())
 
   return {
