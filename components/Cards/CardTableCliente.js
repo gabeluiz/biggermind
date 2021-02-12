@@ -114,7 +114,7 @@ export default function CardTable({ color, data }) {
                 return (
                   <tr {...row.getRowProps()}>
                     {row.cells.map((cell) => {
-                      return <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4" {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                      return <td className="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-no-wrap p-4" {...cell.getCellProps()}>{cell.render("Cell")}</td>
                     })}
                   </tr>
                 );
@@ -123,9 +123,9 @@ export default function CardTable({ color, data }) {
           </table>
           <div className="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 bg-gray-100 text-gray-600 border-gray-200">
             <div>
-              <p class="text-sm text-gray-700">
+              <p className="text-sm text-gray-700">
                 Página <strong> {pageIndex + 1} de {pageOptions.length}</strong>
-                <span class="font-medium"></span>
+                <span className="font-medium"></span>
                 {' | '}
                 Escolha a página:{'  '}
                 <input
